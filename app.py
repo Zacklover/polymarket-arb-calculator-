@@ -29,9 +29,9 @@ def get_yes_no_from_api(market_id: str):
     if len(outcomes) < 2:
         raise ValueError("Binary market nahi mila (2 outcomes required).")
 
-    # outcome[0] = YES, outcome[1] = NO (common convention, check if needed)
-    yes_price = outcomes[0].get("lastPrice")
-    no_price = outcomes[1].get("lastPrice")
+    # outcome = YES, outcome = NO (common convention, check if needed)[1]
+    yes_price = outcomes.get("lastPrice")
+    no_price = outcomes.get("lastPrice")[1]
 
     if yes_price is None or no_price is None:
         raise ValueError("Prices missing (lastPrice not found).")
@@ -136,4 +136,3 @@ with col_right:
 
     else:
         st.info("Inputs set karo, phir **Check ARB** dabao.")
-```
