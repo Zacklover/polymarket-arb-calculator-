@@ -1,11 +1,3 @@
-Seedha paste‑and‑run code de raha hoon: ek hi `app.py` file hai, Streamlit + requests se, jisme:
-
-- Option 1: Sliders (manual test)  
-- Option 2: Polymarket market ID se live YES/NO fetch  
-
-Bas: `pip install streamlit requests` aur `streamlit run app.py`.
-
-```python
 import streamlit as st
 import requests
 
