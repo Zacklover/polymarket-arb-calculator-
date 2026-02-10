@@ -1,31 +1,26 @@
 import streamlit as st
 import requests
-import time
 
 st.set_page_config(page_title="Polymarket Live Arb", layout="wide")
-st.title("🤑 Polymarket Live Arb Radar")
+st.title("🤑 Polymarket Live Arb")
 
-st.write("Market URL paste karo → live YES/NO prices → instant arb calc")
+st.write("Market URL paste karo, live prices fetch ho jayenge")
 
-# ---------- LIVE API (2026 working) ----------
-DATA_BASE = "https://data-api.polymarket.com"
-
-@st.cache_data(ttl=15)
-def fetch_live_prices(slug):
-    """
-    Polymarket data API se live prices
-    """
+# ---------- LIVE API ----------
+def fetch_polymarket_prices(slug):
+    url = f"https://clob.polymarket.com/markets?slug={slug}"
     try:
-        # Try markets endpoint first
-        url = f"{DATA_BASE}/markets"
-        params = {"slug": slug, "limit": 1}
-        r = requests.get(url, params=params, timeout=10)
-        
+        r = requests.get(url, timeout=10)
         if r.status_code == 200:
             data = r.json()
-            if data:
-                market = data[0]
-                tokens = market.get("tokens", [])
-                if len(tokens) >= 2:
-                    yes = tokens[0].get("last_price", 0.5) * 100
-                    no = tokens[1].get("last_price
+            tokens = data[0]["tokens"] if data else []
+            if len(tokens) >= 2:
+                yes = tokens[0]["price"] * 100
+                no = tokens[1]["price"] * 100
+                return yes, no
+    except:
+        pass
+    return None, None
+
+# ---------- UI ----------
+col1, col2
